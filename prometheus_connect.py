@@ -1,6 +1,5 @@
 import httpx
-from typing import Optional
-from datetime import datetime,timezone,timedelta
+from datetime import datetime
 
 from result_schema import PrometheusResponseModel
 
