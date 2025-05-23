@@ -2,11 +2,14 @@ from typing import Dict, List, Tuple, Union, Literal
 from pydantic import BaseModel
 from collections import defaultdict
 from datetime import datetime
+from typing import NamedTuple
+from typing import List, Union
+
 
 # Your wrapper class
 class Metric:
     def __init__(self, metric: Dict[str, str]):
-        self.metric = metric
+        self.dict = metric
         self._key = frozenset(metric.items())
 
     def __hash__(self) -> int:
@@ -18,10 +21,46 @@ class Metric:
         return self._key == other._key
 
     def __repr__(self) -> str:
-        return f"MetricKeyWrapper({self.metric})"
+        return f"MetricKeyWrapper({self.dict})"
 
     def get(self, label: str, default=None):
-        return self.metric.get(label, default)
+        return self.dict.get(label, default)
+    
+
+class TimeSeriesPoint(NamedTuple):
+    timestamp: datetime
+    value: float
+
+
+class TimeSeries:
+    def __init__(self, values: List[TimeSeriesPoint]):
+        self.values : List[TimeSeriesPoint] = values
+
+    def __iter__(self):
+        return iter(self.values)
+
+    def __len__(self):
+        return len(self.values)
+
+    def __getitem__(self, idx)->TimeSeriesPoint:
+        return self.values[idx]
+
+    def __repr__(self):
+        return f"Values({self.values})"
+
+    def add(self, timestamp:datetime, value:float):
+        self.values.append(TimeSeriesPoint(timestamp, value))
+
+    def extend(self, other: 'TimeSeries'):
+        self.values.extend(other.values)
+
+    def latest(self)->TimeSeriesPoint|None:
+        return max(self.values, key=lambda x: x.timestamp, default=None)
+
+    def average(self)->float|None:
+        nums = [v.value for v in self.values if isinstance(v.value, (int, float))]
+        return sum(nums) / len(nums) if nums else None
+
 
 # Prometheus response models
 class VectorResultModel(BaseModel):
@@ -44,25 +83,26 @@ class PrometheusResponseModel(BaseModel):
     status: Literal["success"]
     data: Union[VectorDataModel, MatrixDataModel]
 
-    def _convert_value(self, t: float, v: str, time_as_datetime: bool, value_as_float: bool):
-        ts = datetime.fromtimestamp(t) if time_as_datetime else t
-        val = float(v) if value_as_float else v
+    def _convert_value(self, t: float, v: str,):
+        ts = datetime.fromtimestamp(t) 
+        val = float(v)
         return ts, val
 
     def to_metric_map(
         self,
-        time_as_datetime: bool = True,
-        value_as_float: bool = True
-    ) -> Dict[Metric, List[Tuple[Union[float, datetime], Union[str, float]]]]:
-        metric_map: Dict[Metric, List[Tuple[Union[float, datetime], Union[str, float]]]] = defaultdict(list)
+    ) -> Dict[Metric, TimeSeries]:
+        metric_map: Dict[Metric, TimeSeries] = defaultdict(lambda: TimeSeries([]))
 
         if self.data.resultType == "vector":
             for r in self.data.result:
                 key = Metric(r.metric)
-                metric_map[key].append(self._convert_value(*r.value, time_as_datetime, value_as_float))
+                ts_val = self._convert_value(*r.value,)
+                metric_map[key].add(*ts_val)
         elif self.data.resultType == "matrix":
             for r in self.data.result:
                 key = Metric(r.metric)
-                metric_map[key].extend(self._convert_value(*val, time_as_datetime, value_as_float) for val in r.values)
+                for val in r.values:
+                    ts_val = self._convert_value(*val, )
+                    metric_map[key].add(*ts_val)
 
         return dict(metric_map)

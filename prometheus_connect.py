@@ -1,33 +1,34 @@
 import httpx
 from datetime import datetime
-
 from result_schema import PrometheusResponseModel
 
 class PrometheusClient:
-    URL: str = f"http://10.42.0.1:30090/api/v1"
+    
+    def __init__(self,url):
+        self.base_url = url
 
-    def _query(self, promql: str) -> dict:
+    def query(self, promql: str) -> PrometheusResponseModel:
         with httpx.Client() as client:
-            response = client.get(f"{self.URL}/query", params={"query": promql})
+            response = client.get(f"{self.base_url}/query", params={"query": promql})
             response.raise_for_status()
-            return response.json()
+            return self._parse_response(response.json())
 
-    def _query_range(
+    def query_range(
     self,
     promql: str,
     start: datetime | None = None,
     end: datetime | None = None,
     step: str = "30s", 
-) -> dict:
+) -> PrometheusResponseModel:
         if not (start and end):
             raise ValueError("Both 'start' and 'end' must be provided for range queries")
 
-        start_ts = start.isoformat()
-        end_ts = end.isoformat()
+        start_ts = start.timestamp()
+        end_ts = end.timestamp()
 
         with httpx.Client() as client:
             response = client.get(
-                f"{self.URL}/query_range",
+                f"{self.base_url}/query_range",
                 params={
                     "query": promql,
                     "start": start_ts,
@@ -36,7 +37,7 @@ class PrometheusClient:
                 }
             )
             response.raise_for_status()
-            return response.json()
+            return self._parse_response(response.json())
     
     
     def make_label_string(self,**labels):
