@@ -1,9 +1,9 @@
-from sync_client import PrometheusSync
-from async_client import PrometheusAsync
-from datetime import datetime, timedelta
-from datetime import timezone
-from result_schema import PrometheusResponseModel , MetricLabelSet , TimeSeries
+from datetime import datetime, timedelta, timezone
 import asyncio
+
+from client import PrometheusSync, PrometheusAsync
+from models.core import MetricLabelSet, TimeSeries
+from models.prometheus import PrometheusResponseModel
 
 # Constants
 URL: str = f"http://10.8.0.26:30090"
