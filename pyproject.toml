@@ -42,12 +42,16 @@ source = ["aiopromql"]
 
 [tool.coverage.report]
 show_missing = true
-skip_covered = true
+skip_covered = false
+include = ["aiopromql/**/*.py"]
 exclude_lines = [
     "pragma: no cover",
     "if __name__ == .__main__.:",
     "raise NotImplementedError",
 ]
+
+[tool.coverage.html]
+directory = "htmlcov"
 
 [build-system]
 requires = ["hatchling"]
