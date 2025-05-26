@@ -1,6 +1,6 @@
 [project]
 name = "aiopromql"
-version = "0.1.0"
+version = "0.1.1"
 description = "Minimalist, Pythonic Prometheus HTTP client that supports both async and sync usage"
 authors = [{ name = "Ozay Tokgozlu", email = "ozay.tokgozlu@venit.org" }]
 readme = "README.md"
@@ -13,7 +13,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ruff", "pytest", "hatch"]
+dev = ["ruff", "pytest", "hatch", "pytest-asyncio"]
 
 [tool.ruff]
 line-length = 88
@@ -23,6 +23,7 @@ lint.select = ["E", "F", "I"]  # Error, pyflakes, isort
 [tool.pytest.ini_options]
 addopts = "-ra -q"
 testpaths = ["tests"]
+asyncio_default_fixture_loop_scope = "function"
 
 [build-system]
 requires = ["hatchling"]
