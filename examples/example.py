@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta, timezone
 import asyncio
 
-from aiopromql.client import PrometheusAsync, PrometheusSync
+from aiopromql import PrometheusAsync, PrometheusSync
 from aiopromql.models.core import MetricLabelSet, TimeSeries
 from aiopromql.models.prometheus import PrometheusResponseModel
 
 # Constants
-URL: str = f"http://10.8.0.26:30090"
+URL: str = f"http://10.42.0.1:30090"
 e =  datetime.now(timezone.utc)
 st = e- timedelta(minutes=5)
 

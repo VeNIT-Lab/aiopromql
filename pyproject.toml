@@ -1,0 +1,30 @@
+[project]
+name = "aiopromql"
+version = "0.1.0"
+description = "Minimalist, Pythonic Prometheus HTTP client that supports both async and sync usage"
+authors = [{ name = "Ozay Tokgozlu", email = "ozay.tokgozlu@venit.org" }]
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.9"
+
+dependencies = [
+    "httpx>=0.24",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = ["ruff", "pytest", "hatch"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py39"
+lint.select = ["E", "F", "I"]  # Error, pyflakes, isort
+format = true  # Enable black-compatible formatting
+
+[tool.pytest.ini_options]
+addopts = "-ra -q"
+testpaths = ["tests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
