@@ -95,9 +95,9 @@ hatch build
 
 ## Acknowledgments:
 
-This project is used in the DECICE Framework — the Device Edge Cloud Inelegant Collaboration Environment — aiming to bridge HPC cloud and edge orchestration.
+This project is used in the DECICE — [DEVICE-EDGE-CLOUD Intelligent Collaboration framEwork](https://www.decice.eu/) — aiming to bridge HPC cloud and edge orchestration.
 
-Special thanks to the VeNIT Lab and other partners for their support and collaboration.
+Special thanks to the [VeNIT Lab](https://venit.org/) and [other partners](https://www.decice.eu/consortium/) for their support and collaboration.
 
 ## 📄 License
 

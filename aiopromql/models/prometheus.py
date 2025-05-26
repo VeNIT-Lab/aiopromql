@@ -7,9 +7,11 @@ Includes:
 - PrometheusResponseModel: Top-level response wrapper with transformation helpers.
 """
 
-from typing import Dict, List, Tuple, Union, Literal
-from pydantic import BaseModel
 from collections import defaultdict
+from typing import Dict, List, Literal, Tuple, Union
+
+from pydantic import BaseModel
+
 from .core import MetricLabelSet, TimeSeries, TimeSeriesPoint
 
 

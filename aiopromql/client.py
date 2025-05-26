@@ -1,7 +1,8 @@
-import httpx
 import asyncio
 from datetime import datetime
 from typing import Optional, Union
+
+import httpx
 
 from .models.prometheus import PrometheusResponseModel
 

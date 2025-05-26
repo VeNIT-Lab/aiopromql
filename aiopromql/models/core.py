@@ -7,8 +7,8 @@ Includes:
 - TimeSeries: A collection of time series points with utility methods.
 """
 
-from typing import Dict, List, NamedTuple
 from datetime import datetime
+from typing import Dict, List, NamedTuple
 
 
 class MetricLabelSet:
