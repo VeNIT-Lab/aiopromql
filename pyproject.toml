@@ -13,7 +13,14 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["ruff", "pytest", "hatch", "pytest-asyncio"]
+dev = [
+    "ruff",
+    "pytest",
+    "hatch",
+    "pytest-asyncio",
+    "pytest-cov",         # Added for coverage support
+    "coverage[toml]",     # Optional: adds CLI tools and TOML support
+]
 
 [tool.ruff]
 line-length = 88
@@ -21,9 +28,26 @@ target-version = "py39"
 lint.select = ["E", "F", "I"]  # Error, pyflakes, isort
 
 [tool.pytest.ini_options]
-addopts = "-ra -q"
+addopts = "--cov=aiopromql --cov-report=term-missing -ra -q"
 testpaths = ["tests"]
+markers = [
+    "unit: marks tests as unit tests (fast, isolated)",
+    "integration: marks tests as integration tests (require external )",
+]
 asyncio_default_fixture_loop_scope = "function"
+
+[tool.coverage.run]
+branch = true
+source = ["aiopromql"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_lines = [
+    "pragma: no cover",
+    "if __name__ == .__main__.:",
+    "raise NotImplementedError",
+]
 
 [build-system]
 requires = ["hatchling"]

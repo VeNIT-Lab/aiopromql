@@ -1,6 +1,7 @@
 import asyncio
 from datetime import datetime
 from typing import Optional, Union
+import warnings
 
 import httpx
 
@@ -114,4 +115,4 @@ class PrometheusAsync(PrometheusClientBase):
 
     def __del__(self):
         if not self.client.is_closed:
-            asyncio.create_task(self.aclose())
+            warnings.warn("PrometheusAsync was not closed. Use 'async with' or call 'await .aclose()'")
