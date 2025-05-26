@@ -1,6 +1,6 @@
 import httpx 
 from datetime import datetime
-from models.prometheus import PrometheusResponseModel
+from .models.prometheus import PrometheusResponseModel
 
 class PrometheusClientBase:
     def __init__(self, url: str):
