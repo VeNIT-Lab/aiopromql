@@ -42,9 +42,7 @@ class VectorDataModel(BaseModel):
         Returns:
             Dictionary mapping MetricLabelSet to TimeSeries.
         """
-        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(
-            lambda: TimeSeries([])
-        )
+        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(lambda: TimeSeries([]))
 
         for r in self.result:
             key = MetricLabelSet(r.metric)
@@ -67,9 +65,7 @@ class MatrixDataModel(BaseModel):
         Returns:
             Dictionary mapping MetricLabelSet to TimeSeries.
         """
-        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(
-            lambda: TimeSeries([])
-        )
+        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(lambda: TimeSeries([]))
 
         for r in self.result:
             key = MetricLabelSet(r.metric)

@@ -1,7 +1,6 @@
-import asyncio
+import warnings
 from datetime import datetime
 from typing import Optional, Union
-import warnings
 
 import httpx
 
@@ -34,13 +33,9 @@ class PrometheusSync(PrometheusClientBase):
         super().__init__(url)
         self.session = httpx.Client(timeout=httpx.Timeout(timeout))
 
-    def query(
-        self, promql: str, raw: bool = False
-    ) -> Union[PrometheusResponseModel, dict]:
+    def query(self, promql: str, raw: bool = False) -> Union[PrometheusResponseModel, dict]:
         """Run an instant PromQL query."""
-        response = self.session.get(
-            f"{self.base_url}/api/v1/query", params={"query": promql}
-        )
+        response = self.session.get(f"{self.base_url}/api/v1/query", params={"query": promql})
         response.raise_for_status()
         return response.json() if raw else self._parse_response(response.json())
 
@@ -77,9 +72,7 @@ class PrometheusAsync(PrometheusClientBase):
         super().__init__(url)
         self.client = httpx.AsyncClient(base_url=url, timeout=httpx.Timeout(timeout))
 
-    async def query(
-        self, promql: str, raw: bool = False
-    ) -> Union[PrometheusResponseModel, dict]:
+    async def query(self, promql: str, raw: bool = False) -> Union[PrometheusResponseModel, dict]:
         """Run an instant PromQL query."""
         response = await self.client.get("/api/v1/query", params={"query": promql})
         response.raise_for_status()

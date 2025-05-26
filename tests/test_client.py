@@ -1,63 +1,15 @@
+from datetime import datetime, timezone
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
-from datetime import datetime,timezone
-from unittest.mock import MagicMock, AsyncMock, patch
 
-from aiopromql.client import PrometheusSync, PrometheusAsync, PrometheusClientBase
-from aiopromql.models.core import MetricLabelSet, TimeSeriesPoint, TimeSeries
+from aiopromql.client import PrometheusAsync, PrometheusClientBase, PrometheusSync
+from aiopromql.models.core import MetricLabelSet, TimeSeries, TimeSeriesPoint
 from aiopromql.models.prometheus import VectorDataModel, VectorResultModel
-
-MOCK_PROMETHEUS_VECTOR_RESPONSE = {
-                "status": "success",
-                "data": {
-                    "resultType": "vector",
-                    "result": [
-                        {
-                            "metric": {
-                                "__name__": "up",
-                                "container": "prometheus",
-                                "endpoint": "http-web",
-                                "instance": "10.244.1.156:9090",
-                                "job": "prometheus-stack-kube-prom-prometheus",
-                                "namespace": "monitoring",
-                                "pod": "prometheus-prometheus-stack-kube-prom-prometheus-0",
-                                "service": "prometheus-stack-kube-prom-prometheus",
-                            },
-                            "value": [1748269310.899, "1"],
-                        },
-                    ],
-                },
-            }
-
-MOCK_PROMETHEUS_MATRIX_RESPONSE = {
-  "status": "success",
-  "data": {
-    "resultType": "matrix",
-    "result": [
-      {
-        "metric": {
-          "__name__": "up",
-          "container": "prometheus",
-          "endpoint": "http-web",
-          "instance": "10.244.1.156:9090",
-          "job": "prometheus-stack-kube-prom-prometheus",
-          "namespace": "monitoring",
-          "pod": "prometheus-prometheus-stack-kube-prom-prometheus-0",
-          "service": "prometheus-stack-kube-prom-prometheus"
-        },
-        "values": [
-          [
-            1748269440,
-            "1"
-          ],
-          [
-            1748269560,
-            "1"
-          ]
-        ]
-      }
-    ]
-  }
-}
+from tests.constants import (
+    MOCK_PROMETHEUS_MATRIX_RESPONSE,
+    MOCK_PROMETHEUS_VECTOR_RESPONSE,
+)
 
 
 @pytest.mark.unit
@@ -89,6 +41,7 @@ def test_sync_query_calls(mock_get):
     assert isinstance(raw_res, dict)
 
     client.close()
+
 
 @pytest.mark.unit
 @patch("aiopromql.client.httpx.Client.get")
@@ -138,17 +91,17 @@ async def test_async_query_calls(mock_get):
     assert isinstance(res.to_metric_map(), dict)
     assert res.data.result[0].metric.get("__name__") == "up"
 
-    #close the client
+    # close the client
     await client.aclose()
     # assert client.client.is_closed is True
     assert client.client.is_closed
+
 
 @pytest.mark.unit
 @pytest.mark.asyncio
 async def test_query_with_context_manager():
     mock_response = AsyncMock()
-    mock_response.json = MagicMock(
-        return_value=MOCK_PROMETHEUS_VECTOR_RESPONSE)
+    mock_response.json = MagicMock(return_value=MOCK_PROMETHEUS_VECTOR_RESPONSE)
     mock_response.raise_for_status = MagicMock()
 
     with patch("httpx.AsyncClient") as mock_client_cls:
@@ -160,7 +113,7 @@ async def test_query_with_context_manager():
         async def close_and_set_flag():
             mock_client.is_closed = True
 
-        mock_client.aclose.side_effect = close_and_set_flag # to simulate closing the client
+        mock_client.aclose.side_effect = close_and_set_flag  # to simulate closing the client
 
         mock_client_cls.return_value = mock_client
 
@@ -168,9 +121,7 @@ async def test_query_with_context_manager():
             result = await client.query("up")
 
             # Assertions
-            mock_client.get.assert_awaited_once_with(
-                "/api/v1/query", params={"query": "up"}
-            )
+            mock_client.get.assert_awaited_once_with("/api/v1/query", params={"query": "up"})
             assert result.data.result[0].metric.get("__name__") == "up"
 
         mock_client.aclose.assert_awaited_once()
@@ -190,7 +141,6 @@ async def test_async_query_range(mock_get):
     start = datetime.fromtimestamp(1748269440, tz=timezone.utc)
     end = datetime.fromtimestamp(1748269560, tz=timezone.utc)
 
-
     res = await client.query_range("up", start=start, end=end, step="60s", raw=True)
     assert isinstance(res, dict)
     assert res["data"]["resultType"] == "matrix"
@@ -205,6 +155,7 @@ async def test_async_query_range(mock_get):
     await client.aclose()
     # assert client.client.is_closed is True
     assert client.client.is_closed
+
 
 @pytest.mark.unit
 def test_metric_label_set_and_timeseries():

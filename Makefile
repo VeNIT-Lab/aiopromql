@@ -8,12 +8,15 @@ help:
 	@echo "  make integration-test - Run integration tests"
 	@echo "  make coverage-html   - Generate HTML coverage report"
 	@echo "  make tree            - Display project directory structure"
+	@echo "  make help            - Show this help message"
+	@echo "  make build		   - Build the package"
+	@echo "  make install         - Install the package in editable mode with dev dependencies"
 
 format:
-	ruff --fix .
+	ruff format
 
 lint:
-	ruff .
+	ruff check .
 
 unit-test:
 	pytest -m unit
@@ -28,3 +31,9 @@ coverage-html:
 
 tree:
 	tree -I '.git|node_modules|*.log|*.pyc|venv|htmlcov|__pycache__'
+
+build:
+	hatch build
+install:	
+	pip install --upgrade pip
+	pip install -e .[dev]

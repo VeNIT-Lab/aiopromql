@@ -1,6 +1,12 @@
-import pytest
 from datetime import datetime, timedelta
-from aiopromql.models.core import MetricLabelSet, TimeSeries, TimeSeriesPoint  # replace your_module with actual module name
+
+import pytest
+
+from aiopromql.models.core import (
+    MetricLabelSet,
+    TimeSeries,
+    TimeSeriesPoint,
+)
 
 
 @pytest.mark.unit
