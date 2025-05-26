@@ -8,6 +8,7 @@ from .models.prometheus import PrometheusResponseModel
 
 class PrometheusClientBase:
     """Base Prometheus client with common utilities."""
+
     def __init__(self, url: str):
         self.base_url = url
 
@@ -15,9 +16,9 @@ class PrometheusClientBase:
         """Return PromQL label selector string from provided labels."""
         non_empty_labels = {k: v for k, v in labels.items() if v is not None}
         if not non_empty_labels:
-            return ''
+            return ""
         label_parts = [f'{k}="{v}"' for k, v in non_empty_labels.items()]
-        return '{' + ','.join(label_parts) + '}'
+        return "{" + ",".join(label_parts) + "}"
 
     def _parse_response(self, response: dict) -> PrometheusResponseModel:
         """Parse Prometheus JSON response into model."""
@@ -26,13 +27,18 @@ class PrometheusClientBase:
 
 class PrometheusSync(PrometheusClientBase):
     """Synchronous Prometheus client using httpx."""
+
     def __init__(self, url: str, timeout: Optional[float] = 2.0):
         super().__init__(url)
         self.session = httpx.Client(timeout=httpx.Timeout(timeout))
 
-    def query(self, promql: str, raw: bool = False) -> Union[PrometheusResponseModel, dict]:
+    def query(
+        self, promql: str, raw: bool = False
+    ) -> Union[PrometheusResponseModel, dict]:
         """Run an instant PromQL query."""
-        response = self.session.get(f"{self.base_url}/api/v1/query", params={"query": promql})
+        response = self.session.get(
+            f"{self.base_url}/api/v1/query", params={"query": promql}
+        )
         response.raise_for_status()
         return response.json() if raw else self._parse_response(response.json())
 
@@ -49,7 +55,7 @@ class PrometheusSync(PrometheusClientBase):
         end_ts = end.timestamp()
         response = self.session.get(
             f"{self.base_url}/api/v1/query_range",
-            params={"query": promql, "start": start_ts, "end": end_ts, "step": step}
+            params={"query": promql, "start": start_ts, "end": end_ts, "step": step},
         )
         response.raise_for_status()
         return response.json() if raw else self._parse_response(response.json())
@@ -64,11 +70,14 @@ class PrometheusSync(PrometheusClientBase):
 
 class PrometheusAsync(PrometheusClientBase):
     """Asynchronous Prometheus client using httpx."""
+
     def __init__(self, url: str, timeout: Optional[float] = 2.0):
         super().__init__(url)
         self.client = httpx.AsyncClient(base_url=url, timeout=httpx.Timeout(timeout))
 
-    async def query(self, promql: str, raw: bool = False) -> Union[PrometheusResponseModel, dict]:
+    async def query(
+        self, promql: str, raw: bool = False
+    ) -> Union[PrometheusResponseModel, dict]:
         """Run an instant PromQL query."""
         response = await self.client.get("/api/v1/query", params={"query": promql})
         response.raise_for_status()
@@ -87,7 +96,7 @@ class PrometheusAsync(PrometheusClientBase):
         end_ts = end.timestamp()
         response = await self.client.get(
             "/api/v1/query_range",
-            params={"query": promql, "start": start_ts, "end": end_ts, "step": step}
+            params={"query": promql, "start": start_ts, "end": end_ts, "step": step},
         )
         response.raise_for_status()
         return response.json() if raw else self._parse_response(response.json())

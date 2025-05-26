@@ -19,7 +19,6 @@ dev = ["ruff", "pytest", "hatch"]
 line-length = 88
 target-version = "py39"
 lint.select = ["E", "F", "I"]  # Error, pyflakes, isort
-format = true  # Enable black-compatible formatting
 
 [tool.pytest.ini_options]
 addopts = "-ra -q"

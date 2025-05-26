@@ -6,6 +6,7 @@ Includes:
 - VectorDataModel / MatrixDataModel: Typed Prometheus data blocks.
 - PrometheusResponseModel: Top-level response wrapper with transformation helpers.
 """
+
 from typing import Dict, List, Tuple, Union, Literal
 from pydantic import BaseModel
 from collections import defaultdict
@@ -14,16 +15,21 @@ from .core import MetricLabelSet, TimeSeries, TimeSeriesPoint
 
 class VectorResultModel(BaseModel):
     """Single Prometheus vector result entry."""
+
     metric: Dict[str, str]
     value: Tuple[float, str]
 
+
 class MatrixResultModel(BaseModel):
     """Single Prometheus matrix result entry."""
+
     metric: Dict[str, str]
     values: List[Tuple[float, str]]
 
+
 class VectorDataModel(BaseModel):
     """Parsed vector data block from Prometheus."""
+
     resultType: Literal["vector"]
     result: List[VectorResultModel]
 
@@ -34,7 +40,9 @@ class VectorDataModel(BaseModel):
         Returns:
             Dictionary mapping MetricLabelSet to TimeSeries.
         """
-        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(lambda: TimeSeries([]))
+        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(
+            lambda: TimeSeries([])
+        )
 
         for r in self.result:
             key = MetricLabelSet(r.metric)
@@ -43,8 +51,10 @@ class VectorDataModel(BaseModel):
 
         return dict(metric_map)
 
+
 class MatrixDataModel(BaseModel):
     """Parsed matrix data block from Prometheus."""
+
     resultType: Literal["matrix"]
     result: List[MatrixResultModel]
 
@@ -55,7 +65,9 @@ class MatrixDataModel(BaseModel):
         Returns:
             Dictionary mapping MetricLabelSet to TimeSeries.
         """
-        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(lambda: TimeSeries([]))
+        metric_map: Dict[MetricLabelSet, TimeSeries] = defaultdict(
+            lambda: TimeSeries([])
+        )
 
         for r in self.result:
             key = MetricLabelSet(r.metric)
@@ -65,8 +77,10 @@ class MatrixDataModel(BaseModel):
 
         return dict(metric_map)
 
+
 class PrometheusResponseModel(BaseModel):
     """Top-level Prometheus query response wrapper."""
+
     status: Literal["success"]
     data: Union[VectorDataModel, MatrixDataModel]
 

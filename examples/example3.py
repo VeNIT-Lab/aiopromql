@@ -1,9 +1,10 @@
 import asyncio
 from aiopromql import PrometheusAsync
 
+
 async def main():
     async with PrometheusAsync("http://10.42.0.1:30090") as client:
-        queries = ['up', 'process_cpu_seconds_total', 'node_memory_MemAvailable_bytes']
+        queries = ["up", "process_cpu_seconds_total", "node_memory_MemAvailable_bytes"]
         tasks = [client.query(q) for q in queries]
         responses = await asyncio.gather(*tasks)
 
@@ -14,5 +15,6 @@ async def main():
                 print(f"  Labels: {labels.dict}")
                 for point in series:
                     print(f"    {point}")
+
 
 asyncio.run(main())

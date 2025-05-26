@@ -13,6 +13,7 @@ from datetime import datetime
 
 class MetricLabelSet:
     """Hashable wrapper around a Prometheus metric dict to be used as a dictionary key."""
+
     def __init__(self, metric: Dict[str, str]):
         self.dict = metric
         self._key = frozenset(metric.items())
@@ -30,10 +31,11 @@ class MetricLabelSet:
 
     def get(self, label: str, default=None):
         return self.dict.get(label, default)
-    
+
 
 class TimeSeriesPoint(NamedTuple):
     """A single timestamped float data point."""
+
     timestamp: datetime
     value: float
 
@@ -50,19 +52,20 @@ class TimeSeriesPoint(NamedTuple):
             A TimeSeriesPoint instance.
         """
         return cls(datetime.fromtimestamp(ts), float(value))
-    
+
     def __str__(self):
         return f"{self.timestamp.isoformat()} → {self.value:.2f}"
 
 
 class TimeSeries:
     """A list of TimeSeriesPoints with utility methods."""
+
     def __init__(self, values: List[TimeSeriesPoint]):
         """
         Args:
             values: List of initial TimeSeriesPoint objects.
         """
-        self.values : List[TimeSeriesPoint] = values
+        self.values: List[TimeSeriesPoint] = values
 
     def __iter__(self):
         return iter(self.values)
@@ -70,7 +73,7 @@ class TimeSeries:
     def __len__(self):
         return len(self.values)
 
-    def __getitem__(self, idx)->TimeSeriesPoint:
+    def __getitem__(self, idx) -> TimeSeriesPoint:
         return self.values[idx]
 
     def __repr__(self):
@@ -80,15 +83,15 @@ class TimeSeries:
         """Adds a new data point."""
         self.values.append(point)
 
-    def extend(self, other: 'TimeSeries'):
+    def extend(self, other: "TimeSeries"):
         """Appends another TimeSeries' points to this one."""
         self.values.extend(other.values)
 
-    def latest(self)->TimeSeriesPoint|None:
+    def latest(self) -> TimeSeriesPoint | None:
         """Returns the latest (most recent) data point."""
         return max(self.values, key=lambda x: x.timestamp, default=None)
 
-    def average(self)->float|None:
+    def average(self) -> float | None:
         """Computes the average of all values."""
         nums = [v.value for v in self.values if isinstance(v.value, (int, float))]
         return sum(nums) / len(nums) if nums else None
