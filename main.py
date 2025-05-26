@@ -2,7 +2,7 @@ from sync_client import PrometheusSync
 from async_client import PrometheusAsync
 from datetime import datetime, timedelta
 from datetime import timezone
-from result_schema import PrometheusResponseModel , Metric , TimeSeries
+from result_schema import PrometheusResponseModel , MetricLabelSet , TimeSeries
 import asyncio
 
 # Constants
@@ -11,7 +11,7 @@ e =  datetime.now(timezone.utc)
 st = e- timedelta(minutes=5)
 
 
-def print_query_dict(results:dict[Metric,TimeSeries]):
+def print_query_dict(results:dict[MetricLabelSet,TimeSeries]):
     for metric,timeseries in results.items():
         print(f"Total timeseries points for metric: {metric.get("__name__")} is {len(timeseries)}")
         print(f"Node: {metric.get("nodename")} -> {timeseries.latest().value} , ts: {timeseries.latest().timestamp}")
@@ -20,8 +20,8 @@ def test_sync_print(pq:PrometheusSync):
     promql_query = "node_filesystem_avail_bytes{mountpoint='/'}/1000^3 * on(pod) group_left(nodename) node_uname_info"
     matrix_results : PrometheusResponseModel= pq.query_range(promql_query,st,e,)
     vector_results : PrometheusResponseModel= pq.query(promql_query)
-    matrix_dict:dict[Metric,TimeSeries] = matrix_results.to_metric_map()
-    vector_dict: dict[Metric,TimeSeries] = vector_results.to_metric_map()
+    matrix_dict:dict[MetricLabelSet,TimeSeries] = matrix_results.to_metric_map()
+    vector_dict: dict[MetricLabelSet,TimeSeries] = vector_results.to_metric_map()
 
     print_query_dict(matrix_dict)
     print_query_dict(vector_dict)
