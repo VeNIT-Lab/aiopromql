@@ -1,3 +1,12 @@
+"""
+Generic data structures for modeling time series and labeled metrics.
+
+Includes:
+- MetricLabelSet: A hashable label dictionary wrapper for grouping.
+- TimeSeriesPoint: A timestamped numeric value.
+- TimeSeries: A collection of time series points with utility methods.
+"""
+
 from typing import Dict, List, NamedTuple
 from datetime import datetime
 

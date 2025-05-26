@@ -35,8 +35,8 @@ async def test_async():
 
 def test_sync():
     results:list[PrometheusResponseModel] = []
+    pq = PrometheusSync(URL)
     for i in range(20):
-        pq = PrometheusSync(URL)
         res = pq.query("up")
         results.append(res)
     latest_res = list(results[-1].to_metric_map().items())[-1]

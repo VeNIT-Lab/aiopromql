@@ -1,9 +1,17 @@
+"""
+Pydantic models for parsing and transforming Prometheus query json responses.
+
+Includes:
+- VectorResultModel / MatrixResultModel: Raw response entries.
+- VectorDataModel / MatrixDataModel: Typed Prometheus data blocks.
+- PrometheusResponseModel: Top-level response wrapper with transformation helpers.
+"""
 from typing import Dict, List, Tuple, Union, Literal
 from pydantic import BaseModel
 from collections import defaultdict
 from .core import MetricLabelSet, TimeSeries, TimeSeriesPoint
 
-# Prometheus response models
+
 class VectorResultModel(BaseModel):
     """Single Prometheus vector result entry."""
     metric: Dict[str, str]
@@ -64,9 +72,13 @@ class PrometheusResponseModel(BaseModel):
 
     def to_metric_map(self) -> Dict[MetricLabelSet, TimeSeries]:
         """
-        Converts the response into a metric map, delegating to the underlying data type.
+        Converts the response into a mapping from metric label sets to time series.
+
+        The resulting data structure uses generic, reusable types:
+        - MetricLabelSet: a hashable representation of metric labels.
+        - TimeSeries: a sequence of timestamped values.
 
         Returns:
-            Dictionary mapping MetricLabelSet to TimeSeries.
+            A dictionary mapping MetricLabelSet to TimeSeries.
         """
         return self.data.to_metric_map()
