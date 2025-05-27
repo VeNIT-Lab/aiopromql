@@ -75,25 +75,31 @@ async def main():
 
 asyncio.run(main())
 ```
-## Development
+## 🚧 Development
 ```
 # Install dev tools
 pip install -e .[dev]
+# or 
+make install
+
+# See development commands
+make help
 
 # Run tests
-pytest
+make unit-test
+make integration-test
 
 # Format & lint
-ruff format
-ruff check aiopromql
+make format
+make lint
 
 # Build
-hatch build
+make build
 ```
 ---
 
 
-## Acknowledgments:
+## 🤝  Acknowledgments
 
 This project is used in the DECICE — [DEVICE-EDGE-CLOUD Intelligent Collaboration framEwork](https://www.decice.eu/) — aiming to bridge HPC cloud and edge orchestration.
 
