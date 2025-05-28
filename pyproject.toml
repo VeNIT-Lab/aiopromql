@@ -5,7 +5,7 @@ description = "Minimalist, Pythonic Prometheus HTTP client that supports both as
 authors = [{ name = "Ozay Tokgozlu", email = "ozay.tokgozlu@venit.org" }]
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 dependencies = [
     "httpx>=0.24",
@@ -24,6 +24,7 @@ dev = [
     "sphinx-rtd-theme",   # Read the Docs theme
     "sphinx-autodoc-typehints",  # Type hints support
     "myst-parser",        # Markdown support
+    "aiohttp",           # For metrics generator in integration tests
 ]
 
 [tool.ruff]

@@ -1,4 +1,4 @@
-.PHONY: format lint test-unit test-integration coverage-html docs docs-clean docs-serve docs-watch
+.PHONY: format lint unit-test integration-test coverage-html docs docs-clean docs-serve docs-watch docker-integration-test docker-clean
 
 help:
 	@echo "Available commands:"
@@ -9,8 +9,14 @@ help:
 	@echo "  make coverage-html   - Generate HTML coverage report"
 	@echo "  make tree            - Display project directory structure"
 	@echo "  make help            - Show this help message"
-	@echo "  make build		   - Build the package"
+	@echo "  make build           - Build the package"
 	@echo "  make install         - Install the package in editable mode with dev dependencies"
+	@echo "  make docs            - Build HTML documentation with Sphinx"
+	@echo "  make docs-clean      - Remove generated documentation"
+	@echo "  make docs-serve      - Serve built documentation locally on port 8000"
+	@echo "  make docs-watch      - Auto-rebuild and serve docs on changes (port 8000)"
+	@echo "  make docker-integration-test - Run integration tests using Docker Compose"
+	@echo "  make docker-clean    - Tear down Docker setup and clean volumes/data"
 
 format:
 	ruff format
@@ -50,3 +56,11 @@ docs-serve:
 
 docs-watch:
 	sphinx-autobuild docs/source docs/build/html --port 8000 --open-browser
+
+# Docker-based integration testing
+docker-integration-test:
+	docker compose up --build --abort-on-container-exit --exit-code-from integration-tests
+
+docker-clean:
+	docker compose down -v
+	rm -rf prometheus_data

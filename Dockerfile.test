@@ -1,0 +1,21 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy project files
+COPY . .
+
+# Install package in editable mode with dev dependencies
+RUN pip install --no-cache-dir -e .[dev]
+
+# Set environment variables
+ENV PYTHONPATH=/app
+ENV PROMETHEUS_URL=http://prometheus:9090
+
+# Default command
+CMD ["make", "integration-test"] 

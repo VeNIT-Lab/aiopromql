@@ -4,7 +4,7 @@ Installation
 Requirements
 -----------
 
-* Python 3.9 or higher
+* Python 3.10 or higher
 * httpx >= 0.24
 * pydantic >= 2.0
 
