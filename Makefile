@@ -1,4 +1,4 @@
-.PHONY: format lint test-unit test-integration coverage-html
+.PHONY: format lint test-unit test-integration coverage-html docs docs-clean docs-serve docs-watch
 
 help:
 	@echo "Available commands:"
@@ -37,3 +37,16 @@ build:
 install:	
 	pip install --upgrade pip
 	pip install -e .[dev]
+
+# Documentation
+docs:
+	sphinx-build -b html docs/source docs/build/html
+
+docs-clean:
+	rm -rf docs/build
+
+docs-serve:
+	python -m http.server -d docs/build/html 8000
+
+docs-watch:
+	sphinx-autobuild docs/source docs/build/html --port 8000 --open-browser

@@ -1,0 +1,693 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API Reference &mdash; aiopromql 0.1.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=a58bc63e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Contributing" href="contributing.html" />
+    <link rel="prev" title="Usage Guide" href="usage.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            aiopromql
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-aiopromql.client">Clients</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aiopromql.client.PrometheusAsync"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusAsync.aclose"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync.aclose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusAsync.query"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusAsync.query_range"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync.query_range()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aiopromql.client.PrometheusClientBase"><code class="docutils literal notranslate"><span class="pre">PrometheusClientBase</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusClientBase._parse_response"><code class="docutils literal notranslate"><span class="pre">PrometheusClientBase._parse_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusClientBase.make_label_string"><code class="docutils literal notranslate"><span class="pre">PrometheusClientBase.make_label_string()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aiopromql.client.PrometheusSync"><code class="docutils literal notranslate"><span class="pre">PrometheusSync</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusSync.close"><code class="docutils literal notranslate"><span class="pre">PrometheusSync.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusSync.query"><code class="docutils literal notranslate"><span class="pre">PrometheusSync.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.client.PrometheusSync.query_range"><code class="docutils literal notranslate"><span class="pre">PrometheusSync.query_range()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#models">Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#core-models">Core Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.core.MetricLabelSet"><code class="docutils literal notranslate"><span class="pre">MetricLabelSet</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.core.TimeSeries"><code class="docutils literal notranslate"><span class="pre">TimeSeries</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.core.TimeSeriesPoint"><code class="docutils literal notranslate"><span class="pre">TimeSeriesPoint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#prometheus-models">Prometheus Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.prometheus.MatrixDataModel"><code class="docutils literal notranslate"><span class="pre">MatrixDataModel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.prometheus.MatrixResultModel"><code class="docutils literal notranslate"><span class="pre">MatrixResultModel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel"><code class="docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.prometheus.VectorDataModel"><code class="docutils literal notranslate"><span class="pre">VectorDataModel</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.models.prometheus.VectorResultModel"><code class="docutils literal notranslate"><span class="pre">VectorResultModel</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-aiopromql">Package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aiopromql.PrometheusAsync"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.PrometheusAsync.aclose"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync.aclose()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.PrometheusAsync.query"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.PrometheusAsync.query_range"><code class="docutils literal notranslate"><span class="pre">PrometheusAsync.query_range()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#aiopromql.PrometheusSync"><code class="docutils literal notranslate"><span class="pre">PrometheusSync</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.PrometheusSync.close"><code class="docutils literal notranslate"><span class="pre">PrometheusSync.close()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.PrometheusSync.query"><code class="docutils literal notranslate"><span class="pre">PrometheusSync.query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#aiopromql.PrometheusSync.query_range"><code class="docutils literal notranslate"><span class="pre">PrometheusSync.query_range()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">aiopromql</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="api-reference">
+<h1>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h1>
+<p>This section provides detailed documentation for the aiopromql API.</p>
+<section id="module-aiopromql.client">
+<span id="clients"></span><h2>Clients<a class="headerlink" href="#module-aiopromql.client" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusAsync">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.client.</span></span><span class="sig-name descname"><span class="pre">PrometheusAsync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusAsync" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiopromql.client.PrometheusClientBase" title="aiopromql.client.PrometheusClientBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusClientBase</span></code></a></p>
+<p>Asynchronous Prometheus client using httpx.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusAsync.aclose">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aclose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync.aclose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusAsync.aclose" title="Link to this definition"></a></dt>
+<dd><p>Close the async client session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusAsync.query">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusAsync.query" title="Link to this definition"></a></dt>
+<dd><p>Run an instant PromQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusAsync.query_range">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'30s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync.query_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusAsync.query_range" title="Link to this definition"></a></dt>
+<dd><p>Run a ranged PromQL query over a time window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusClientBase">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.client.</span></span><span class="sig-name descname"><span class="pre">PrometheusClientBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusClientBase"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusClientBase" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base Prometheus client with common utilities.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusClientBase._parse_response">
+<span class="sig-name descname"><span class="pre">_parse_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusClientBase._parse_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusClientBase._parse_response" title="Link to this definition"></a></dt>
+<dd><p>Parse Prometheus JSON response into model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusClientBase.make_label_string">
+<span class="sig-name descname"><span class="pre">make_label_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusClientBase.make_label_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusClientBase.make_label_string" title="Link to this definition"></a></dt>
+<dd><p>Return PromQL label selector string from provided labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusSync">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.client.</span></span><span class="sig-name descname"><span class="pre">PrometheusSync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusSync" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiopromql.client.PrometheusClientBase" title="aiopromql.client.PrometheusClientBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusClientBase</span></code></a></p>
+<p>Synchronous Prometheus client using httpx.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusSync.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusSync.close" title="Link to this definition"></a></dt>
+<dd><p>Close the sync client session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusSync.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusSync.query" title="Link to this definition"></a></dt>
+<dd><p>Run an instant PromQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.client.PrometheusSync.query_range">
+<span class="sig-name descname"><span class="pre">query_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'30s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync.query_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.client.PrometheusSync.query_range" title="Link to this definition"></a></dt>
+<dd><p>Run a ranged PromQL query over a time window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="models">
+<h2>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h2>
+<section id="core-models">
+<h3>Core Models<a class="headerlink" href="#core-models" title="Link to this heading"></a></h3>
+<p id="module-aiopromql.models.core">Generic data structures for modeling time series and labeled metrics.</p>
+<p>Includes:
+- MetricLabelSet: A hashable label dictionary wrapper for grouping.
+- TimeSeriesPoint: A timestamped numeric value.
+- TimeSeries: A collection of time series points with utility methods.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.core.MetricLabelSet">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.core.</span></span><span class="sig-name descname"><span class="pre">MetricLabelSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#MetricLabelSet"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.MetricLabelSet" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Hashable wrapper around a Prometheus metric dict to be used as a dictionary key.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.MetricLabelSet.get">
+<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#MetricLabelSet.get"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.MetricLabelSet.get" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeries">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.core.</span></span><span class="sig-name descname"><span class="pre">TimeSeries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeries" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>A list of TimeSeriesPoints with utility methods.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeries.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeries.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeries.__init__" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>values</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a>[<a class="reference internal" href="#aiopromql.models.core.TimeSeriesPoint" title="aiopromql.models.core.TimeSeriesPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSeriesPoint</span></code></a>]</span>) – List of initial TimeSeriesPoint objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeries.add_point">
+<span class="sig-name descname"><span class="pre">add_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeries.add_point"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeries.add_point" title="Link to this definition"></a></dt>
+<dd><p>Adds a new data point.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeries.average">
+<span class="sig-name descname"><span class="pre">average</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeries.average"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeries.average" title="Link to this definition"></a></dt>
+<dd><p>Computes the average of all values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeries.extend">
+<span class="sig-name descname"><span class="pre">extend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeries.extend"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeries.extend" title="Link to this definition"></a></dt>
+<dd><p>Appends another TimeSeries’ points to this one.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeries.latest">
+<span class="sig-name descname"><span class="pre">latest</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeries.latest"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeries.latest" title="Link to this definition"></a></dt>
+<dd><p>Returns the latest (most recent) data point.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#aiopromql.models.core.TimeSeriesPoint" title="aiopromql.models.core.TimeSeriesPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSeriesPoint</span></code></a> | <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">None</span></code></a></span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeriesPoint">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.core.</span></span><span class="sig-name descname"><span class="pre">TimeSeriesPoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timestamp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.13)"><span class="pre">datetime</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeriesPoint"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeriesPoint" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></a></p>
+<p>A single timestamped float data point.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeriesPoint.from_prometheus_value">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_prometheus_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/core.html#TimeSeriesPoint.from_prometheus_value"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.core.TimeSeriesPoint.from_prometheus_value" title="Link to this definition"></a></dt>
+<dd><p>Converts a Prometheus response (timestamp, value) pair to TimeSeriesPoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ts</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></span>) – Epoch timestamp.</p></li>
+<li><p><strong>value</strong> (<span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a></span>) – String representation of float value.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="sphinx_autodoc_typehints-type"><a class="reference internal" href="#aiopromql.models.core.TimeSeriesPoint" title="aiopromql.models.core.TimeSeriesPoint"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSeriesPoint</span></code></a></span></p>
+</dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A TimeSeriesPoint instance.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeriesPoint.timestamp">
+<span class="sig-name descname"><span class="pre">timestamp</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime</span></code></a></em><a class="headerlink" href="#aiopromql.models.core.TimeSeriesPoint.timestamp" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.core.TimeSeriesPoint.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a></em><a class="headerlink" href="#aiopromql.models.core.TimeSeriesPoint.value" title="Link to this definition"></a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="prometheus-models">
+<h3>Prometheus Models<a class="headerlink" href="#prometheus-models" title="Link to this heading"></a></h3>
+<p id="module-aiopromql.models.prometheus">Pydantic models for parsing and transforming Prometheus query json responses.</p>
+<p>Includes:
+- VectorResultModel / MatrixResultModel: Raw response entries.
+- VectorDataModel / MatrixDataModel: Typed Prometheus data blocks.
+- PrometheusResponseModel: Top-level response wrapper with transformation helpers.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.prometheus.</span></span><span class="sig-name descname"><span class="pre">MatrixDataModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#MatrixDataModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+<p>Parsed matrix data block from Prometheus.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'result':</span> <span class="pre">FieldInfo(annotation=List[MatrixResultModel],</span> <span class="pre">required=True),</span> <span class="pre">'resultType':</span> <span class="pre">FieldInfo(annotation=Literal['matrix'],</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel.result">
+<span class="sig-name descname"><span class="pre">result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a><span class="pre">[</span><a class="reference internal" href="#aiopromql.models.prometheus.MatrixResultModel" title="aiopromql.models.prometheus.MatrixResultModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixResultModel</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel.result" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel.resultType">
+<span class="sig-name descname"><span class="pre">resultType</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a><span class="pre">[</span><code class="docutils literal notranslate"><span class="pre">'matrix'</span></code><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel.resultType" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixDataModel.to_metric_map">
+<span class="sig-name descname"><span class="pre">to_metric_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#MatrixDataModel.to_metric_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.MatrixDataModel.to_metric_map" title="Link to this definition"></a></dt>
+<dd><p>Converts matrix results to a dict of TimeSeries grouped by metric labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference internal" href="#aiopromql.models.core.MetricLabelSet" title="aiopromql.models.core.MetricLabelSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricLabelSet</span></code></a>, <a class="reference internal" href="#aiopromql.models.core.TimeSeries" title="aiopromql.models.core.TimeSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSeries</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping MetricLabelSet to TimeSeries.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixResultModel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.prometheus.</span></span><span class="sig-name descname"><span class="pre">MatrixResultModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#MatrixResultModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.MatrixResultModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+<p>Single Prometheus matrix result entry.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixResultModel.metric">
+<span class="sig-name descname"><span class="pre">metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixResultModel.metric" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixResultModel.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixResultModel.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixResultModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixResultModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixResultModel.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'metric':</span> <span class="pre">FieldInfo(annotation=Dict[str,</span> <span class="pre">str],</span> <span class="pre">required=True),</span> <span class="pre">'values':</span> <span class="pre">FieldInfo(annotation=List[Tuple[float,</span> <span class="pre">str]],</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixResultModel.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.MatrixResultModel.values">
+<span class="sig-name descname"><span class="pre">values</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.MatrixResultModel.values" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.prometheus.</span></span><span class="sig-name descname"><span class="pre">PrometheusResponseModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#PrometheusResponseModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+<p>Top-level Prometheus query response wrapper.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel.data">
+<span class="sig-name descname"><span class="pre">data</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a><span class="pre">[</span><a class="reference internal" href="#aiopromql.models.prometheus.VectorDataModel" title="aiopromql.models.prometheus.VectorDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">VectorDataModel</span></code></a><span class="pre">,</span> <a class="reference internal" href="#aiopromql.models.prometheus.MatrixDataModel" title="aiopromql.models.prometheus.MatrixDataModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixDataModel</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel.data" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'data':</span> <span class="pre">FieldInfo(annotation=Union[VectorDataModel,</span> <span class="pre">MatrixDataModel],</span> <span class="pre">required=True),</span> <span class="pre">'status':</span> <span class="pre">FieldInfo(annotation=Literal['success'],</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel.status">
+<span class="sig-name descname"><span class="pre">status</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a><span class="pre">[</span><code class="docutils literal notranslate"><span class="pre">'success'</span></code><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel.status" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.PrometheusResponseModel.to_metric_map">
+<span class="sig-name descname"><span class="pre">to_metric_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#PrometheusResponseModel.to_metric_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.PrometheusResponseModel.to_metric_map" title="Link to this definition"></a></dt>
+<dd><p>Converts the response into a mapping from metric label sets to time series.</p>
+<p>The resulting data structure uses generic, reusable types:
+- MetricLabelSet: a hashable representation of metric labels.
+- TimeSeries: a sequence of timestamped values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference internal" href="#aiopromql.models.core.MetricLabelSet" title="aiopromql.models.core.MetricLabelSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricLabelSet</span></code></a>, <a class="reference internal" href="#aiopromql.models.core.TimeSeries" title="aiopromql.models.core.TimeSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSeries</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A dictionary mapping MetricLabelSet to TimeSeries.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.prometheus.</span></span><span class="sig-name descname"><span class="pre">VectorDataModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#VectorDataModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+<p>Parsed vector data block from Prometheus.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'result':</span> <span class="pre">FieldInfo(annotation=List[VectorResultModel],</span> <span class="pre">required=True),</span> <span class="pre">'resultType':</span> <span class="pre">FieldInfo(annotation=Literal['vector'],</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel.result">
+<span class="sig-name descname"><span class="pre">result</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.List" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code></a><span class="pre">[</span><a class="reference internal" href="#aiopromql.models.prometheus.VectorResultModel" title="aiopromql.models.prometheus.VectorResultModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">VectorResultModel</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel.result" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel.resultType">
+<span class="sig-name descname"><span class="pre">resultType</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code></a><span class="pre">[</span><code class="docutils literal notranslate"><span class="pre">'vector'</span></code><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel.resultType" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorDataModel.to_metric_map">
+<span class="sig-name descname"><span class="pre">to_metric_map</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#VectorDataModel.to_metric_map"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.VectorDataModel.to_metric_map" title="Link to this definition"></a></dt>
+<dd><p>Converts vector results to a dict of TimeSeries object grouped by metric labels.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a>[<a class="reference internal" href="#aiopromql.models.core.MetricLabelSet" title="aiopromql.models.core.MetricLabelSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">MetricLabelSet</span></code></a>, <a class="reference internal" href="#aiopromql.models.core.TimeSeries" title="aiopromql.models.core.TimeSeries"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeSeries</span></code></a>]</span></p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary mapping MetricLabelSet to TimeSeries.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorResultModel">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.models.prometheus.</span></span><span class="sig-name descname"><span class="pre">VectorResultModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/models/prometheus.html#VectorResultModel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.models.prometheus.VectorResultModel" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+<p>Single Prometheus vector result entry.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorResultModel.metric">
+<span class="sig-name descname"><span class="pre">metric</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorResultModel.metric" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorResultModel.model_computed_fields">
+<span class="sig-name descname"><span class="pre">model_computed_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">ComputedFieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorResultModel.model_computed_fields" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of computed field names and their corresponding <cite>ComputedFieldInfo</cite> objects.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorResultModel.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[ConfigDict]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorResultModel.model_config" title="Link to this definition"></a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorResultModel.model_fields">
+<span class="sig-name descname"><span class="pre">model_fields</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar[dict[str,</span> <span class="pre">FieldInfo]]</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'metric':</span> <span class="pre">FieldInfo(annotation=Dict[str,</span> <span class="pre">str],</span> <span class="pre">required=True),</span> <span class="pre">'value':</span> <span class="pre">FieldInfo(annotation=Tuple[float,</span> <span class="pre">str],</span> <span class="pre">required=True)}</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorResultModel.model_fields" title="Link to this definition"></a></dt>
+<dd><p>Metadata about the fields defined on the model,
+mapping of field names to [<cite>FieldInfo</cite>][pydantic.fields.FieldInfo].</p>
+<p>This replaces <cite>Model.__fields__</cite> from Pydantic V1.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="aiopromql.models.prometheus.VectorResultModel.value">
+<span class="sig-name descname"><span class="pre">value</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a><span class="pre">[</span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a><span class="pre">,</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a><span class="pre">]</span></em><a class="headerlink" href="#aiopromql.models.prometheus.VectorResultModel.value" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+<section id="module-aiopromql">
+<span id="package"></span><h2>Package<a class="headerlink" href="#module-aiopromql" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.PrometheusAsync">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.</span></span><span class="sig-name descname"><span class="pre">PrometheusAsync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusAsync" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiopromql.client.PrometheusClientBase" title="aiopromql.client.PrometheusClientBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusClientBase</span></code></a></p>
+<p>Asynchronous Prometheus client using httpx.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.PrometheusAsync.aclose">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">aclose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync.aclose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusAsync.aclose" title="Link to this definition"></a></dt>
+<dd><p>Close the async client session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.PrometheusAsync.query">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusAsync.query" title="Link to this definition"></a></dt>
+<dd><p>Run an instant PromQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.PrometheusAsync.query_range">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">query_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'30s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusAsync.query_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusAsync.query_range" title="Link to this definition"></a></dt>
+<dd><p>Run a ranged PromQL query over a time window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="aiopromql.PrometheusSync">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">aiopromql.</span></span><span class="sig-name descname"><span class="pre">PrometheusSync</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusSync" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#aiopromql.client.PrometheusClientBase" title="aiopromql.client.PrometheusClientBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusClientBase</span></code></a></p>
+<p>Synchronous Prometheus client using httpx.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.PrometheusSync.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync.close"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusSync.close" title="Link to this definition"></a></dt>
+<dd><p>Close the sync client session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.PrometheusSync.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync.query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusSync.query" title="Link to this definition"></a></dt>
+<dd><p>Run an instant PromQL query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="aiopromql.PrometheusSync.query_range">
+<span class="sig-name descname"><span class="pre">query_range</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">promql</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'30s'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/aiopromql/client.html#PrometheusSync.query_range"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#aiopromql.PrometheusSync.query_range" title="Link to this definition"></a></dt>
+<dd><p>Run a ranged PromQL query over a time window.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><span class="sphinx_autodoc_typehints-type"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.13)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference internal" href="#aiopromql.models.prometheus.PrometheusResponseModel" title="aiopromql.models.prometheus.PrometheusResponseModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">PrometheusResponseModel</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>]</span></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="usage.html" class="btn btn-neutral float-left" title="Usage Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Ozay Tokgozlu.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

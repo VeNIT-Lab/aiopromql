@@ -20,6 +20,10 @@ dev = [
     "pytest-asyncio",
     "pytest-cov",         # Added for coverage support
     "coverage[toml]",     # Optional: adds CLI tools and TOML support
+    "sphinx",             # Documentation generator
+    "sphinx-rtd-theme",   # Read the Docs theme
+    "sphinx-autodoc-typehints",  # Type hints support
+    "myst-parser",        # Markdown support
 ]
 
 [tool.ruff]
