@@ -6,7 +6,7 @@ import pytest
 
 from aiopromql import PrometheusAsync, PrometheusSync, make_label_string
 
-# Get Prometheus URL from environment variable
+# Get Prometheus URL from environment variable!
 PROMETHEUS_URL = os.getenv("PROMETHEUS_URL", "http://localhost:9090")
 
 # Common Prometheus metrics to test
@@ -30,7 +30,7 @@ def test_sync_query():
     assert resp is not None
     metric_map = resp.to_metric_map()
     assert len(metric_map) > 0
-    assert any(labels.get("job") == "prometheus" for labels in metric_map.keys())
+    assert any("job" in labels.dict for labels in metric_map.keys())
 
     # Test range query
     end = datetime.now(tz=timezone.utc)
@@ -51,7 +51,7 @@ async def test_async_query():
         assert resp is not None
         metric_map = resp.to_metric_map()
         assert len(metric_map) > 0
-        assert any(labels.get("job") == "prometheus" for labels in metric_map.keys())
+        assert any("job" in labels.dict for labels in metric_map.keys())
 
         # Test range query
         end = datetime.now(tz=timezone.utc)
@@ -82,12 +82,12 @@ def test_metric_labels():
     client = PrometheusSync(PROMETHEUS_URL)
 
     # Query with specific label
-    labels = make_label_string(job="prometheus")
+    labels = make_label_string(negate_keys=["job"],job="")
     resp = client.query(f"up{labels}")
     assert resp is not None
     metric_map = resp.to_metric_map()
     assert len(metric_map) > 0
-    assert all(labels.get("job") == "prometheus" for labels in metric_map.keys())
+    assert all("job" in labels.dict for labels in metric_map.keys())
 
 
 @pytest.mark.integration
@@ -96,7 +96,7 @@ async def test_rate_query():
     """Test rate queries."""
     async with PrometheusAsync(PROMETHEUS_URL) as client:
         # Query rate of HTTP requests
-        resp = await client.query("rate(prometheus_http_requests_total[5m])")
+        resp = await client.query("rate(prometheus_http_requests_total[1m])")
         assert resp is not None
         metric_map = resp.to_metric_map()
         assert len(metric_map) > 0

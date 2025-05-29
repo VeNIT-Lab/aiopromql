@@ -1,7 +1,17 @@
-def make_label_string(**labels) -> str:
-    """Return PromQL label selector string from provided labels."""
-    non_empty_labels = {k: v for k, v in labels.items() if v is not None}
-    if not non_empty_labels:
+def make_label_string(negate_keys=None, **labels) -> str:
+    """
+    Return PromQL label selector string from provided labels.
+    
+    negate_keys: iterable of keys whose match should be negated (using !=).
+    labels: key=value pairs for labels.
+    """
+    negate_keys = set(negate_keys or [])
+    # Filter out None values
+    filtered = {k: v for k, v in labels.items() if v is not None}
+    if not filtered:
         return ""
-    label_parts = [f'{k}="{v}"' for k, v in non_empty_labels.items()]
-    return "{" + ",".join(label_parts) + "}"
+    parts = []
+    for k, v in filtered.items():
+        op = "!=" if k in negate_keys else "="
+        parts.append(f'{k}{op}"{v}"')
+    return "{" + ",".join(parts) + "}"

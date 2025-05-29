@@ -62,5 +62,4 @@ docker-integration-test:
 	docker compose up --build --abort-on-container-exit --exit-code-from integration-tests
 
 docker-clean:
-	docker compose down -v
-	rm -rf prometheus_data
+	docker compose down

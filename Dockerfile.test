@@ -6,16 +6,16 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y \
     make \
     && rm -rf /var/lib/apt/lists/*
-
-# Copy project files
-COPY . .
-
-# Install package in editable mode with dev dependencies
-RUN pip install --no-cache-dir -e .[dev]
+COPY requirements.dev.txt ./
+RUN pip install -r requirements.dev.txt
 
 # Set environment variables
 ENV PYTHONPATH=/app
 ENV PROMETHEUS_URL=http://prometheus:9090
 
+# Copy rest of the files
+COPY . .
+# Install package in editable mode without reinstalling deps.
+RUN pip install --no-cache-dir -e .[dev] --no-deps
 # Default command
-CMD ["make", "integration-test"] 
+CMD ["sh", "-c", "python tests/integration/wait_for_prometheus.py && make integration-test"]
