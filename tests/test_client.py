@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
-from aiopromql.client import PrometheusAsync, PrometheusClientBase, PrometheusSync
+from aiopromql import PrometheusAsync, PrometheusSync, make_label_string
 from aiopromql.models.core import MetricLabelSet, TimeSeries, TimeSeriesPoint
 from aiopromql.models.prometheus import VectorDataModel, VectorResultModel
 from tests.constants import (
@@ -14,10 +14,9 @@ from tests.constants import (
 
 @pytest.mark.unit
 def test_make_label_string():
-    client = PrometheusClientBase("http://dummy")
-    assert client.make_label_string(foo="bar", baz=None) == '{foo="bar"}'
-    assert client.make_label_string() == ""
-    assert client.make_label_string(a="1", b="2") in ('{a="1",b="2"}', '{b="2",a="1"}')
+    assert make_label_string(foo="bar", baz=None) == '{foo="bar"}'
+    assert make_label_string() == ""
+    assert make_label_string(a="1", b="2") in ('{a="1",b="2"}', '{b="2",a="1"}')
 
 
 @pytest.mark.unit

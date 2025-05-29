@@ -89,17 +89,6 @@
     <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">base_url</span> <span class="o">=</span> <span class="n">url</span>
 
-<div class="viewcode-block" id="PrometheusClientBase.make_label_string">
-<a class="viewcode-back" href="../../api.html#aiopromql.client.PrometheusClientBase.make_label_string">[docs]</a>
-    <span class="k">def</span><span class="w"> </span><span class="nf">make_label_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">labels</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return PromQL label selector string from provided labels.&quot;&quot;&quot;</span>
-        <span class="n">non_empty_labels</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">labels</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">}</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">non_empty_labels</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;&quot;</span>
-        <span class="n">label_parts</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s1">=&quot;</span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s1">&quot;&#39;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">non_empty_labels</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
-        <span class="k">return</span> <span class="s2">&quot;{&quot;</span> <span class="o">+</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">label_parts</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;}&quot;</span></div>
-
-
 <div class="viewcode-block" id="PrometheusClientBase._parse_response">
 <a class="viewcode-back" href="../../api.html#aiopromql.client.PrometheusClientBase._parse_response">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">_parse_response</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PrometheusResponseModel</span><span class="p">:</span>
@@ -121,7 +110,15 @@
 <div class="viewcode-block" id="PrometheusSync.query">
 <a class="viewcode-back" href="../../api.html#aiopromql.client.PrometheusSync.query">[docs]</a>
     <span class="k">def</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">promql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">PrometheusResponseModel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run an instant PromQL query.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run an instant PromQL query.</span>
+
+<span class="sd">        :param promql: The PromQL query string to execute.</span>
+<span class="sd">        :type promql: str</span>
+<span class="sd">        :param raw: If True, return raw JSON response as dict; otherwise parse into model.</span>
+<span class="sd">        :type raw: bool</span>
+<span class="sd">        :return: Parsed Prometheus response or raw JSON dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">base_url</span><span class="si">}</span><span class="s2">/api/v1/query&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">promql</span><span class="p">})</span>
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span> <span class="k">if</span> <span class="n">raw</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
@@ -137,7 +134,21 @@
         <span class="n">step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;30s&quot;</span><span class="p">,</span>
         <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">PrometheusResponseModel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run a ranged PromQL query over a time window.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run a ranged PromQL query over a time window.</span>
+
+<span class="sd">        :param promql: The PromQL query string to execute.</span>
+<span class="sd">        :type promql: str</span>
+<span class="sd">        :param start: Start datetime of the query range.</span>
+<span class="sd">        :type start: datetime.datetime</span>
+<span class="sd">        :param end: End datetime of the query range.</span>
+<span class="sd">        :type end: datetime.datetime</span>
+<span class="sd">        :param step: Query resolution step width (e.g., &#39;30s&#39;, &#39;1m&#39;).</span>
+<span class="sd">        :type step: str</span>
+<span class="sd">        :param raw: If True, return raw JSON response as dict; otherwise parse into model.</span>
+<span class="sd">        :type raw: bool</span>
+<span class="sd">        :return: Parsed Prometheus response or raw JSON dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_ts</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
         <span class="n">end_ts</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
         <span class="n">response</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
@@ -172,7 +183,15 @@
 <div class="viewcode-block" id="PrometheusAsync.query">
 <a class="viewcode-back" href="../../api.html#aiopromql.client.PrometheusAsync.query">[docs]</a>
     <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">promql</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">PrometheusResponseModel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run an instant PromQL query.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run an instant PromQL query.</span>
+
+<span class="sd">        :param promql: The PromQL query string to execute.</span>
+<span class="sd">        :type promql: str</span>
+<span class="sd">        :param raw: If True, return raw JSON response as dict; otherwise parse into model.</span>
+<span class="sd">        :type raw: bool</span>
+<span class="sd">        :return: Parsed Prometheus response or raw JSON dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;/api/v1/query&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="n">promql</span><span class="p">})</span>
         <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
         <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span> <span class="k">if</span> <span class="n">raw</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_parse_response</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span></div>
@@ -188,7 +207,21 @@
         <span class="n">step</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;30s&quot;</span><span class="p">,</span>
         <span class="n">raw</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">PrometheusResponseModel</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot;Run a ranged PromQL query over a time window.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Run a ranged PromQL query over a time window.</span>
+
+<span class="sd">        :param promql: The PromQL query string to execute.</span>
+<span class="sd">        :type promql: str</span>
+<span class="sd">        :param start: Start datetime of the query range.</span>
+<span class="sd">        :type start: datetime.datetime</span>
+<span class="sd">        :param end: End datetime of the query range.</span>
+<span class="sd">        :type end: datetime.datetime</span>
+<span class="sd">        :param step: Query resolution step width (e.g., &#39;30s&#39;, &#39;1m&#39;).</span>
+<span class="sd">        :type step: str</span>
+<span class="sd">        :param raw: If True, return raw JSON response as dict; otherwise parse into model.</span>
+<span class="sd">        :type raw: bool</span>
+<span class="sd">        :return: Parsed Prometheus response or raw JSON dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">start_ts</span> <span class="o">=</span> <span class="n">start</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
         <span class="n">end_ts</span> <span class="o">=</span> <span class="n">end</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
         <span class="n">response</span> <span class="o">=</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">client</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>

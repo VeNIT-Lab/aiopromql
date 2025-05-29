@@ -35,7 +35,7 @@ Development Setup
    .. code-block:: bash
 
        make test-unit
-       make test-integration
+       make test-docker-integration-test
 
 3. Format and lint code:
 

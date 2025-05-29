@@ -31,10 +31,10 @@ Range Query
 
 .. code-block:: python
 
-    from datetime import datetime, timedelta
+    from datetime import datetime, timedelta, timezone
 
     # Set time range
-    end = datetime.utcnow()
+    end = datetime.now(timezone.utc)
     start = end - timedelta(hours=1)
 
     # Execute range query
@@ -61,7 +61,7 @@ Basic Async Query
     async def main():
         async with PrometheusAsync("http://localhost:9090") as client:
             # Execute multiple queries concurrently
-            queries = ['up', 'process_cpu_seconds_total', 'node_memory_MemAvailable_bytes']
+            queries = ['up', 'process_cpu_seconds_total', 'process_resident_memory_bytes']
             tasks = [client.query(q) for q in queries]
             responses = await asyncio.gather(*tasks)
 
@@ -81,9 +81,12 @@ Range Query with Async
 
 .. code-block:: python
 
+    from datetime import datetime, timedelta, timezone
+    from aiopromql import PrometheusAsync
+
     async def get_range_data():
         async with PrometheusAsync("http://localhost:9090") as client:
-            end = datetime.utcnow()
+            end = datetime.now(timezone.utc)
             start = end - timedelta(hours=1)
             
             resp = await client.query_range('up', start=start, end=end, step='60s')

@@ -1,10 +1,5 @@
 """
 Generic data structures for modeling time series and labeled metrics.
-
-Includes:
-- MetricLabelSet: A hashable label dictionary wrapper for grouping.
-- TimeSeriesPoint: A timestamped numeric value.
-- TimeSeries: A collection of time series points with utility methods.
 """
 
 from datetime import datetime
@@ -12,7 +7,18 @@ from typing import Dict, List, NamedTuple
 
 
 class MetricLabelSet:
-    """Hashable wrapper around a Prometheus metric dict to be used as a dictionary key."""
+    """
+    Hashable wrapper around a Prometheus metric label dictionary.
+
+    Prometheus metrics are identified by a set of key-value labels
+    (e.g., {"job": "api", "instance": "localhost:9090"}). This class allows such
+    a label set to be used as a key in Python dictionaries by making it hashable
+    and comparable.
+
+    Instances of this class are used as keys in the dictionary returned by
+    `PrometheusResponseModel.to_metric_map()`, where each MetricLabelSet maps to
+    a TimeSeries object.
+    """
 
     def __init__(self, metric: Dict[str, str]):
         self.dict = metric
@@ -30,11 +36,26 @@ class MetricLabelSet:
         return f"MetricLabelSet({self.dict})"
 
     def get(self, label: str, default=None):
+        """
+        Return the value for the given label key, or default if not present.
+
+        :param label: The label key to retrieve from the metric dictionary.
+        :type label: str
+        :param default: The value to return if the label is not found. Defaults to None.
+        :return: The value corresponding to the label, or the default if label is missing.
+        :rtype: str or Any
+        """
         return self.dict.get(label, default)
 
 
 class TimeSeriesPoint(NamedTuple):
-    """A single timestamped float data point."""
+    """
+    A single timestamped data point from a Prometheus time series.
+
+    Represents one (timestamp, value) pair, where the timestamp is a `datetime`
+    object and the value is a float. Useful for building time series from Prometheus
+    query results.
+    """
 
     timestamp: datetime
     value: float
@@ -58,7 +79,13 @@ class TimeSeriesPoint(NamedTuple):
 
 
 class TimeSeries:
-    """A list of TimeSeriesPoints with utility methods."""
+    """
+    A sequence of timestamped float values (TimeSeriesPoint) with utility methods.
+
+    This class abstracts a Prometheus time series and provides methods for inspection,
+    aggregation, and manipulation. Used in `PrometheusResponseModel.to_metric_map()`
+    where each MetricLabelSet maps to a TimeSeries.
+    """
 
     def __init__(self, values: List[TimeSeriesPoint]):
         """

@@ -1,10 +1,5 @@
 """
 Pydantic models for parsing and transforming Prometheus query json responses.
-
-Includes:
-- VectorResultModel / MatrixResultModel: Raw response entries.
-- VectorDataModel / MatrixDataModel: Typed Prometheus data blocks.
-- PrometheusResponseModel: Top-level response wrapper with transformation helpers.
 """
 
 from collections import defaultdict
