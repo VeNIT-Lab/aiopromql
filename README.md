@@ -104,28 +104,8 @@ async def get_range_data():
 metric_map = asyncio.run(get_range_data())
 ```
 ## 🚧 Development
-```
-# Install dev tools
-pip install -e .[dev]
-# or 
-make install
 
-# See development commands
-make help
-
-# Run tests
-make unit-test
-make integration-test
-
-# Format & lint
-make format
-make lint
-
-# Build
-make build
-```
----
-
+For full guidelines on contributing, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## 🤝  Acknowledgments
 

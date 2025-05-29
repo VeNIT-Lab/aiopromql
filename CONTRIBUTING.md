@@ -30,8 +30,13 @@ We use GitHub to host code, to track issues and feature requests, as well as acc
 2. Run tests:
 
    ```bash
-   make test-unit
-   make test-docker-integration-test
+   make unit-test
+   # run instegration tests via docker-compose
+   make docker-integration-test 
+
+   # or manually run it by specifying a PROMETHEUS_URL 
+   export PROMETHEUS_URL=http://10.42.0.1:30090
+   make integration-test
    ```
 
 3. Format and lint code:
