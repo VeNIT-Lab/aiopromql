@@ -41,13 +41,14 @@ jobs:
     - name: Run unit tests
       run: |
         pytest -m unit --cov=aiopromql --cov-report=xml
-        
-    - name: Run integration tests
-      run: |
-        pytest -m integration
-        
+
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: otkt/aiopromql
+        
+    - name: Run integration tests
+      run: |
+        pytest -m integration
+        

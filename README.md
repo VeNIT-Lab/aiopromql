@@ -1,5 +1,7 @@
 # aiopromql
 
+[![codecov](https://codecov.io/gh/otkt/aiopromql/graph/badge.svg?token=DY530CX8FY)](https://codecov.io/gh/otkt/aiopromql)
+
 **aiopromql** is a minimalist Prometheus HTTP client for Python that supports both synchronous and asynchronous querying. It provides a clean, Pythonic model layer for Prometheus query responses and convenient helpers for mapping metrics into structured time series.
 
 ---
