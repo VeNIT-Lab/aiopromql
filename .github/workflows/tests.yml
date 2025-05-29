@@ -46,7 +46,7 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        slug: otkt/aiopromql
+        slug: VeNIT-Lab/aiopromql
         
     - name: Run integration tests
       run: |

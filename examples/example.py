@@ -2,34 +2,12 @@ import asyncio
 from datetime import datetime, timedelta, timezone
 
 from aiopromql import PrometheusAsync, PrometheusSync
-from aiopromql.models.core import MetricLabelSet, TimeSeries
 from aiopromql.models.prometheus import PrometheusResponseModel
 
 # Constants
 URL: str = "http://10.42.0.1:30090"
 e = datetime.now(timezone.utc)
 st = e - timedelta(minutes=5)
-
-
-def print_query_dict(results: dict[MetricLabelSet, TimeSeries]):
-    for metric, timeseries in results.items():
-        print(f"Total timeseries points for metric: {metric.get('__name__')} is {len(timeseries)}")
-        print(f"Node: {metric.get('nodename')} -> {timeseries.latest().value} , ts: {timeseries.latest().timestamp}")
-
-
-def test_sync_print(pq: PrometheusSync):
-    promql_query = "node_filesystem_avail_bytes{mountpoint='/'}/1000^3 * on(pod) group_left(nodename) node_uname_info"
-    matrix_results: PrometheusResponseModel = pq.query_range(
-        promql_query,
-        st,
-        e,
-    )
-    vector_results: PrometheusResponseModel = pq.query(promql_query)
-    matrix_dict: dict[MetricLabelSet, TimeSeries] = matrix_results.to_metric_map()
-    vector_dict: dict[MetricLabelSet, TimeSeries] = vector_results.to_metric_map()
-
-    print_query_dict(matrix_dict)
-    print_query_dict(vector_dict)
 
 
 async def test_async():

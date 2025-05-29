@@ -58,7 +58,7 @@ By contributing, you agree that your contributions will be licensed under the MI
 
 ## Report Bugs
 
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/otkt/aiopromql/issues/new); it's that easy!
+We use GitHub issues to track public bugs. Report a bug by [opening a new issue](https://github.com/VeNIT-Lab/aiopromql/issues/new); it's that easy!
 
 ### Writing Bug Reports
 

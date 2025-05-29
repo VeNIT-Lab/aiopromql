@@ -24,10 +24,10 @@ dependencies = [
     "pydantic>=2.0",
 ]
 [project.urls]
-Homepage = "https://github.com/otkt/aiopromql"
+Homepage = "https://github.com/VeNIT-Lab/aiopromql"
 Documentation = "https://aiopromql.readthedocs.io/"
-Repository = "https://github.com/otkt/aiopromql.git"
-Issues = "https://github.com/otkt/aiopromql/issues"
+Repository = "https://github.com/VeNIT-Lab/aiopromql.git"
+Issues = "https://github.com/VeNIT-Lab/aiopromql/issues"
 
 [project.optional-dependencies]
 dev = [
