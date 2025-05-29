@@ -44,10 +44,11 @@ jobs:
         
     - name: Run integration tests
       run: |
-        pytest -m integration --cov=aiopromql --cov-append --cov-report=xml
+        pytest -m integration
         
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v3
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         file: ./coverage.xml
         fail_ci_if_error: true 
