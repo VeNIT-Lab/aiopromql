@@ -1,10 +1,12 @@
 # wait_for_prometheus.py
 import time
+
 import httpx
 
 PROM_URL = "http://prometheus:9090"
 TIMEOUT = 90  # seconds
-QUERY = 'up[1m]'
+QUERY = "up[1m]"
+
 
 def wait_for_data():
     deadline = time.time() + TIMEOUT
@@ -25,6 +27,7 @@ def wait_for_data():
                 print(f"⚠️ Other error: {e}")
             time.sleep(5)
     raise TimeoutError("❌ Timed out waiting for Prometheus to return up[1m] data.")
+
 
 if __name__ == "__main__":
     wait_for_data()

@@ -1,7 +1,7 @@
 def make_label_string(negate_keys=None, **labels) -> str:
     """
     Return PromQL label selector string from provided labels.
-    
+
     negate_keys: iterable of keys whose match should be negated (using !=).
     labels: key=value pairs for labels.
     """

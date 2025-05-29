@@ -82,7 +82,7 @@ def test_metric_labels():
     client = PrometheusSync(PROMETHEUS_URL)
 
     # Query with specific label
-    labels = make_label_string(negate_keys=["job"],job="")
+    labels = make_label_string(negate_keys=["job"], job="")
     resp = client.query(f"up{labels}")
     assert resp is not None
     metric_map = resp.to_metric_map()
