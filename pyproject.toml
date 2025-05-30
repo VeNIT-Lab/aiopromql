@@ -1,6 +1,6 @@
 [project]
 name = "aiopromql"
-version = "0.1.1"
+version = "0.1.2"
 description = "Minimalist, Pythonic Prometheus HTTP client that supports both async and sync usage"
 authors = [{ name = "Ozay Tokgozlu", email = "ozay.tokgozlu@venit.org" }]
 readme = "README.md"
