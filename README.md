@@ -111,9 +111,10 @@ For full guidelines on contributing, please see [CONTRIBUTING.md](CONTRIBUTING.m
 
 ## 🤝  Acknowledgments
 
-This project is used in the DECICE — [DEVICE-EDGE-CLOUD Intelligent Collaboration framEwork](https://www.decice.eu/) — aiming to bridge HPC cloud and edge orchestration.
+This Python package is developed by the [VeNIT Lab](https://venit.org/) and is utilized in the **[DECICE](https://www.decice.eu/)** — *DEVICE-EDGE-CLOUD Intelligent Collaboration framEwork* — which aims to bridge HPC cloud and edge orchestration.
 
-Special thanks to the [VeNIT Lab](https://venit.org/) and [other partners](https://www.decice.eu/consortium/) for their support and collaboration.
+We also acknowledge the collaboration with [other consortium partners](https://www.decice.eu/consortium/).
+
 
 ## 📄 License
 
