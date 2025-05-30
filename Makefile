@@ -54,9 +54,6 @@ docs-clean:
 docs-serve:
 	python -m http.server -d docs/build/html 8000
 
-docs-watch:
-	sphinx-autobuild docs/source docs/build/html --port 8000 --open-browser
-
 # Docker-based integration testing
 docker-integration-test:
 	docker compose up --build --abort-on-container-exit --exit-code-from integration-tests

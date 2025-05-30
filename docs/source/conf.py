@@ -3,6 +3,7 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../.."))
 
+
 def linkcode_resolve(domain, info):
     if domain != "py" or not info["module"]:
         return None
@@ -37,19 +38,27 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages
 html_theme = "sphinx_rtd_theme"
+html_theme_options = {
+    "display_version": True,
+    "navigation_depth": 4,
+    "prev_next_buttons_location": "bottom",
+    "style_external_links": True,
+    "logo_only": False,
+}
+
 html_context = {
     "display_github": True,
     "github_user": "VeNIT-Lab",
     "github_repo": "aiopromql",
     "github_version": "main",
-    "conf_py_path": "/docs/source/",  # Adjust if your conf.py is elsewhere
+    "conf_py_path": "/docs/source/",
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
-
+templates_path = ["_templates"]
 # Intersphinx mapping
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
