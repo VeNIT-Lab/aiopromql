@@ -104,7 +104,7 @@ class TimeSeries:
         return self.values[idx]
 
     def __repr__(self):
-        return f"Values({self.values})"
+        return f"{self.values}"
 
     def add_point(self, point: TimeSeriesPoint):
         """Adds a new data point."""
