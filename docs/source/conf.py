@@ -3,8 +3,15 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../.."))
 
+def linkcode_resolve(domain, info):
+    if domain != "py" or not info["module"]:
+        return None
+    filename = info["module"].replace(".", "/")
+    return f"https://github.com/VeNIT-Lab/aiopromql/blob/main/{filename}.py"
+
+
 project = "aiopromql"
-copyright = "2025, Ozay Tokgozlu"
+copyright = "2025, VeNIT Lab"
 author = "Ozay Tokgozlu"
 
 # The full version, including alpha/beta/rc tags
@@ -17,6 +24,7 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
     "sphinx_autodoc_typehints",
+    "sphinx.ext.linkcode",
     "myst_parser",
 ]
 
@@ -29,6 +37,13 @@ exclude_patterns = []
 
 # The theme to use for HTML and HTML Help pages
 html_theme = "sphinx_rtd_theme"
+html_context = {
+    "display_github": True,
+    "github_user": "VeNIT-Lab",
+    "github_repo": "aiopromql",
+    "github_version": "main",
+    "conf_py_path": "/docs/source/",  # Adjust if your conf.py is elsewhere
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

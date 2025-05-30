@@ -35,13 +35,16 @@ dev = [
     "pytest",
     "hatch",
     "pytest-asyncio",
-    "pytest-cov",         # Added for coverage support
-    "coverage[toml]",     # Optional: adds CLI tools and TOML support
+    "pytest-cov",
+    "coverage[toml]",
+    "aiohttp",           # For metrics generator in integration tests
+]
+
+docs = [
     "sphinx",             # Documentation generator
     "sphinx-rtd-theme",   # Read the Docs theme
     "sphinx-autodoc-typehints",  # Type hints support
     "myst-parser",        # Markdown support
-    "aiohttp",           # For metrics generator in integration tests
 ]
 
 [tool.ruff]
