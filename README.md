@@ -105,6 +105,9 @@ async def get_range_data():
 # Run the async function
 metric_map = asyncio.run(get_range_data())
 ```
+## 📚 Documentation  
+Detailed docs are available at [aiopromql.readthedocs.io](https://aiopromql.readthedocs.io/)
+
 ## 🚧 Development
 
 For full guidelines on contributing, please see [CONTRIBUTING.md](CONTRIBUTING.md).
