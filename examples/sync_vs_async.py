@@ -5,7 +5,7 @@ from aiopromql import PrometheusAsync, PrometheusSync
 from aiopromql.models.prometheus import PrometheusResponseModel
 
 # Constants
-URL: str = "http://10.42.0.1:30090"
+URL: str = "https://demo.promlabs.com"
 e = datetime.now(timezone.utc)
 st = e - timedelta(minutes=5)
 
@@ -15,7 +15,7 @@ async def test_async():
         tasks = [prom.query("up") for i in range(20)]
         results = await asyncio.gather(*tasks, return_exceptions=True)
         latest_res = list(results[-1].to_metric_map().items())[-1]
-        print(f"sucessfulyl got {len(results)} results, latest is {latest_res}")
+        print(f"sucessfulyl got {len(results)} results, latest: \n{latest_res}")
 
 
 def test_sync():
@@ -25,11 +25,13 @@ def test_sync():
         res = pq.query("up")
         results.append(res)
     latest_res = list(results[-1].to_metric_map().items())[-1]
-    print(f"sucessfulyl got {len(results)} results, latest is {latest_res}")
+    print(f"sucessfulyl got {len(results)} results, latest: \n{latest_res}")
 
 
 if __name__ == "__main__":
     import time
+
+    print("Sending 20 queries sync vs async... ")
 
     print("------ Running Sync ------")
     start = time.time()
